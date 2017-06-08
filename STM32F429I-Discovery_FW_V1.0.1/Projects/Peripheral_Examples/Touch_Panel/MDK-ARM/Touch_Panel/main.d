@@ -7,7 +7,7 @@
 .\touch_panel\main.o: .\..\..\..\..\Libraries\CMSIS\Include\core_cmFunc.h
 .\touch_panel\main.o: .\..\..\..\..\Libraries\CMSIS\Include\core_cm4_simd.h
 .\touch_panel\main.o: .\..\..\..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
-.\touch_panel\main.o: .\..\stm32f4xx_conf.h
+.\touch_panel\main.o: .\..\..\..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx_conf.h
 .\touch_panel\main.o: .\..\..\..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h
 .\touch_panel\main.o: .\..\..\..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 .\touch_panel\main.o: .\..\..\..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h
@@ -40,3 +40,6 @@
 .\touch_panel\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\touch_panel\main.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\stm32f429i_discovery.h
 .\touch_panel\main.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_ioe.h
+.\touch_panel\main.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_lcd.h
+.\touch_panel\main.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_sdram.h
+.\touch_panel\main.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\../Common/fonts.h

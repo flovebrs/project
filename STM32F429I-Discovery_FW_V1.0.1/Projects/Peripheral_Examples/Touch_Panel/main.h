@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include "stm32f429i_discovery.h"
 #include "stm32f429i_discovery_ioe.h"
+#include "stm32f429i_discovery_lcd.h"
 
 
 
@@ -42,7 +43,6 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/ 
 /* Exported functions ------------------------------------------------------- */
-extern int t1;
 #endif /* __MAIN_H */
 
 

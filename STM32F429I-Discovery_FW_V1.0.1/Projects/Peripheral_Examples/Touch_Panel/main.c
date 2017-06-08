@@ -1,15 +1,30 @@
+
 #include "main.h"
-int t1;
+
+static void TP_Config(void);
+
 int main(void)
 {
-	t1=0;
+	int t=0;
+	char x[10];
+  TP_Config();
     
-  while (1){
-		if(TIM_GetITStatus(TIM2,TIM_FLAG_Update)==SET)	t1=t1+1;
-		if(EXTI_GetFlagStatus(EXTI_Line0)!=SET)	t1=0;
-		
+  while (1)
+  {
+		t=t+1;
+		sprintf(x,"%d",t);
+		LCD_DisplayStringLine(LINE(0), (uint8_t *)x);
+	}
 }
 
+static void TP_Config(void)
+{
+	LCD_Init();
+  LCD_LayerInit();
+  LTDC_Cmd(ENABLE);
+  LCD_SetLayer(LCD_FOREGROUND_LAYER);
+  LCD_Clear(LCD_COLOR_WHITE);
+  LCD_SetFont(&Font8x8);
 }
 
 void assert_failed(uint8_t* file, uint32_t line)
@@ -18,4 +33,5 @@ void assert_failed(uint8_t* file, uint32_t line)
   {
   }
 }
+
 

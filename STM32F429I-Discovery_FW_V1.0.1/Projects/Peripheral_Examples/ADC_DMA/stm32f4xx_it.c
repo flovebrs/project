@@ -148,50 +148,54 @@ void SysTick_Handler(void)
 }
 
 void TIM2_IRQHandler(void){
-	/*
+		char x[10];
+		static uint8_t led=0;
+		sprintf(x,"%d",temp);
+		LCD_ClearLine(LINE(0));
+		LCD_DisplayStringLine(LINE(0), (uint8_t *)x);
+
 	//char string[12]={'h','e','l','l','o',' ','w','o','r','l','d','\n'};	
 	//int i=0;
-	static uint8_t led=0;
+	
 	if(led==0)
 	{
 		led=1;
-		STM_EVAL_LEDOn(LED3);
+		STM_EVAL_LEDOn(LED4);
 	}
 	else
 	{
 		led=0;
-		STM_EVAL_LEDOff(LED3);
+		STM_EVAL_LEDOff(LED4);
 	}
-
+	/*
 	for(i=0;i<12;i++){
 		USART_SendData(USART1,string[i]);
 		while(USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET);
 	}
 */
-	temp=temp+1;
-	
 TIM_ClearITPendingBit(TIM2,TIM_FLAG_Update);
 TIM_ClearFlag(TIM2,TIM_FLAG_Update);
 	
 }
-/*
+
 void EXTI0_IRQHandler(void){
-temp=0;
+temp=temp+1;
 t_flag=0;
 	if(EXTI_GetFlagStatus(EXTI_Line0)!=RESET){
 	GPIO_ToggleBits(GPIOG,GPIO_Pin_13);
 	EXTI_ClearITPendingBit(EXTI_Line0);
 	}
 }
-*/
+/*
 void EXTI1_IRQHandler(void){
 t_flag=0;
+	temp=temp+1;
 	if(EXTI_GetFlagStatus(EXTI_Line1)!=RESET){
 	GPIO_ToggleBits(GPIOG,GPIO_Pin_13);
 	EXTI_ClearITPendingBit(EXTI_Line1);
 	}
 }
-
+*/
 
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */

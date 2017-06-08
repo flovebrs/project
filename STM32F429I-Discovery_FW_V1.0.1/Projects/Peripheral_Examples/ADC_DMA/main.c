@@ -9,21 +9,23 @@ static void TIM2_Config(void);
 //static void TP_Config(void);
 static void GPIOA_Config(void);
 static void GPIOG_Config(void);
-//static void EXTI0_Config(void);
-static void EXTI1_Config(void);
+static void EXTI0_Config(void);
+//static void EXTI1_Config(void);
+static void TP_Config(void);
 uint32_t temp,t_flag;
 
 int main(void){
 	uint32_t LowLevel_Time;
 	GPIOA_Config();
 	GPIOG_Config();
+	TP_Config();
 	//USART_Config();
-	//EXTI0_Config();
-	EXTI1_Config();
+	EXTI0_Config();
+	//EXTI1_Config();
 	TIM2_Config();
 	//TIM3_Config();
-	//	TP_Config();
-	//STM_EVAL_LEDInit(LED3);
+	STM_EVAL_LEDInit(LED3);
+	temp=0;
 	while(1){
 	if(t_flag==1){
 	LowLevel_Time=LowLevel_Time+temp;
@@ -57,7 +59,7 @@ GPIO_Init(GPIOA,&GPIO_Structure);
 static void GPIOG_Config(void){
 GPIO_InitTypeDef GPIO_Structure;
 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG,ENABLE);
-GPIO_Structure.GPIO_Pin=GPIO_Pin_13;
+GPIO_Structure.GPIO_Pin=GPIO_Pin_13|GPIO_Pin_14;
 GPIO_Structure.GPIO_Speed=GPIO_Speed_50MHz;
 GPIO_Structure.GPIO_Mode=GPIO_Mode_OUT;
 GPIO_Structure.GPIO_OType=GPIO_OType_PP;
@@ -110,8 +112,8 @@ TIM_TimeBaseInitTypeDef TIM2_Init;
 NVIC_InitTypeDef NVIC_InitStructure;
 RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
 TIM2_Init.TIM_ClockDivision=TIM_CKD_DIV1;
-TIM2_Init.TIM_Prescaler=7200-1;
-TIM2_Init.TIM_Period=0;
+TIM2_Init.TIM_Prescaler=18000-1;
+TIM2_Init.TIM_Period=2500;
 TIM2_Init.TIM_CounterMode=TIM_CounterMode_Up;
 TIM_TimeBaseInit(TIM2,&TIM2_Init);
 TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);
@@ -125,7 +127,7 @@ NVIC_Init(&NVIC_InitStructure);
 TIM_Cmd(TIM2,ENABLE);
 }
 	
-/*
+
 static void EXTI0_Config(void){
 EXTI_InitTypeDef	EXTI_InitStructure;
 NVIC_InitTypeDef	NVIC_InitStructure;
@@ -142,7 +144,7 @@ NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
 NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
 NVIC_Init(&NVIC_InitStructure);
 }
-*/
+/*
 static void EXTI1_Config(void){
 EXTI_InitTypeDef	EXTI_InitStructure;
 NVIC_InitTypeDef	NVIC_InitStructure;
@@ -159,6 +161,14 @@ NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
 NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
 NVIC_Init(&NVIC_InitStructure);
 }
-
-
+*/
+static void TP_Config(void)
+{
+	LCD_Init();
+  LCD_LayerInit();
+  LTDC_Cmd(ENABLE);
+  LCD_SetLayer(LCD_FOREGROUND_LAYER);
+  LCD_Clear(LCD_COLOR_WHITE);
+  LCD_SetFont(&Font16x24);
+}
 
