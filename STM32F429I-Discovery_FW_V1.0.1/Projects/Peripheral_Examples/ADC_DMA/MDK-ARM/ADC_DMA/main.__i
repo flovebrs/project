@@ -1,0 +1,6 @@
+-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I.\..\ -I.\..\..\..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include -I.\..\..\..\..\Libraries\CMSIS\Include -I.\..\..\..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc -I.\..\..\..\..\Utilities\STM32F429I-Discovery
+-I C:\Keil_v5\ARM\RV31\INC
+-I C:\Keil_v5\ARM\CMSIS\Include
+-I C:\Keil_v5\ARM\Inc\ST\STM32F4xx
+-D__UVISION_VERSION="517" -DUSE_STDPERIPH_DRIVER -DSTM32F429_439xx -DUSE_STM32F429I_DISCO -DSTM32F429X
+-o .\adc_dma\main.o --omf_browse .\adc_dma\main.crf --depend .\adc_dma\main.d "..\main.c"

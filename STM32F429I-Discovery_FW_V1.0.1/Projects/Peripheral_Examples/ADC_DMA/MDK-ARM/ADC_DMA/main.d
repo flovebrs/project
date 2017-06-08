@@ -7,7 +7,7 @@
 .\adc_dma\main.o: .\..\..\..\..\Libraries\CMSIS\Include\core_cmFunc.h
 .\adc_dma\main.o: .\..\..\..\..\Libraries\CMSIS\Include\core_cm4_simd.h
 .\adc_dma\main.o: .\..\..\..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
-.\adc_dma\main.o: .\..\..\..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx_conf.h
+.\adc_dma\main.o: .\..\stm32f4xx_conf.h
 .\adc_dma\main.o: .\..\..\..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h
 .\adc_dma\main.o: .\..\..\..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 .\adc_dma\main.o: .\..\..\..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h
