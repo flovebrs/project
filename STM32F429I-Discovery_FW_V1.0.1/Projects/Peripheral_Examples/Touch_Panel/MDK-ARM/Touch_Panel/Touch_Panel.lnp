@@ -1,0 +1,26 @@
+--cpu Cortex-M4.fp
+".\touch_panel\startup_stm32f429_439xx.o"
+".\touch_panel\stm32f429i_discovery.o"
+".\touch_panel\stm32f429i_discovery_ioe.o"
+".\touch_panel\stm32f429i_discovery_sdram.o"
+".\touch_panel\stm32f429i_discovery_lcd.o"
+".\touch_panel\misc.o"
+".\touch_panel\stm32f4xx_adc.o"
+".\touch_panel\stm32f4xx_dma.o"
+".\touch_panel\stm32f4xx_dma2d.o"
+".\touch_panel\stm32f4xx_exti.o"
+".\touch_panel\stm32f4xx_fmc.o"
+".\touch_panel\stm32f4xx_gpio.o"
+".\touch_panel\stm32f4xx_i2c.o"
+".\touch_panel\stm32f4xx_ltdc.o"
+".\touch_panel\stm32f4xx_rcc.o"
+".\touch_panel\stm32f4xx_spi.o"
+".\touch_panel\stm32f4xx_syscfg.o"
+".\touch_panel\stm32f4xx_tim.o"
+".\touch_panel\main.o"
+".\touch_panel\stm32f4xx_it.o"
+".\touch_panel\system_stm32f4xx.o"
+--library_type=microlib --strict --scatter ".\Touch_Panel\Touch_Panel.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Touch_Panel.map" -o .\Touch_Panel\Touch_Panel.axf

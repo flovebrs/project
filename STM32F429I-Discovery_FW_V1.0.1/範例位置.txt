@@ -1,0 +1,1 @@
+Projects ==>  Peripheral_Examples ==>  任意資料夾 ==> MDK-ARM ==> xxxxx.uvproj
