@@ -42,3 +42,4 @@
 .\adc_dma\main.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_lcd.h
 .\adc_dma\main.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_sdram.h
 .\adc_dma\main.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\../Common/fonts.h
+.\adc_dma\main.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_ioe.h

@@ -147,6 +147,32 @@ void SysTick_Handler(void)
 {
 }
 
+
+	void TIM2_IRQHandler(void){
+GPIO_ToggleBits(GPIOG, GPIO_Pin_13);
+	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+	TIM_ClearFlag(TIM2, TIM_FLAG_Update);
+	i++;
+    if(i<15){
+		if (IOE_Config() == IOE_OK){
+			LCD_Clear(LCD_COLOR_WHITE);
+			LCD_SetFont(&Font16x24);
+			LCD_DisplayStringLine(LINE(5), (uint8_t*)"      QAQ");			
+		}
+	  }
+    else {
+		if(i>14&&i<30){
+		 if (IOE_Config() == IOE_OK){
+				LCD_Clear(LCD_COLOR_WHITE);
+			  LCD_SetFont(&Font16x24);
+			  LCD_DisplayStringLine(LINE(5), (uint8_t*)"      TAT");
+		  }
+		}
+	  else{
+			i=0;
+		}
+	}
+}
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */

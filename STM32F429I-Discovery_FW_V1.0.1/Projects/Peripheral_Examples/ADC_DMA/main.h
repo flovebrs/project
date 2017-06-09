@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include "stm32f429i_discovery.h"
 #include "stm32f429i_discovery_lcd.h"
+#include "stm32f429i_discovery_ioe.h"
 /* Private define ------------------------------------------------------------*/
 /* used to display the ADC converted value on LCD */
 #define USE_LCD
@@ -42,7 +43,8 @@
      
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-extern uint32_t temp,t_flag;
+extern uint32_t temp,	LowLevel_Time,	CCR1,	CCR2;
+extern int x;
 /* Exported macro ------------------------------------------------------------*/ 
 /* Exported functions ------------------------------------------------------- */
 
