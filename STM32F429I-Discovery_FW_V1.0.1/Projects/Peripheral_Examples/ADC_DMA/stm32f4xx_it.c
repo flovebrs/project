@@ -147,36 +147,30 @@ void SysTick_Handler(void)
 {
 }
 
-void TIM2_IRQHandler(void){
-TIM_ClearITPendingBit(TIM2 , TIM_FLAG_Update);
+void TIM1_CC_IRQHandler(void){
+TIM_ClearITPendingBit(TIM1 , TIM_IT_CC2);
 	if(x!=30){
-	CCR1=TIM_GetCapture1(TIM2);
-	CCR2=TIM_GetCapture2(TIM2);
+	CCR1=TIM_GetCapture1(TIM1);
+	CCR2=TIM_GetCapture2(TIM1);
 	LowLevel_Time=LowLevel_Time+(CCR2-CCR1);
-	TIM_ClearITPendingBit(TIM2,TIM_FLAG_Update);
-	TIM_ClearFlag(TIM2,TIM_FLAG_Update);
+	//TIM_ClearITPendingBit(TIM1,TIM_FLAG_Update);
+	//TIM_ClearFlag(TIM2,TIM_FLAG_Update);
 	}
 }
 
 void TIM3_IRQHandler(void){
+	char buffer[10];
 	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 	TIM_ClearFlag(TIM3, TIM_FLAG_Update);
 	x++;
-    if(x<=15){
+    if(x==30){
 			if (IOE_Config() == IOE_OK){
 				LCD_Clear(LCD_COLOR_WHITE);
-				LCD_DisplayStringLine(LINE(5), (uint8_t*)"      QAQ");			
+				sprintf(buffer,"%d",LowLevel_Time);
+				LCD_DisplayStringLine(LINE(5), (uint8_t*)buffer);		
+				x=0;
 			}
 	  }
-    else if(x>=16&&x<=30){
-		 if (IOE_Config() == IOE_OK){
-				LCD_Clear(LCD_COLOR_WHITE);
-			  LCD_DisplayStringLine(LINE(5), (uint8_t*)"      TAT");
-		  }
-		}
-	  else{
-			x=0;
-		}
 }	
 
 /******************************************************************************/
