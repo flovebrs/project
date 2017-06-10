@@ -147,12 +147,24 @@ void SysTick_Handler(void)
 {
 }
 
-void TIM1_CC_IRQHandler(void){
-TIM_ClearITPendingBit(TIM1 , TIM_IT_CC2);
+void TIM2_IRQHandler(void){
+TIM_ClearITPendingBit(TIM2 , TIM_IT_CC1);
 	if(x!=30){
-	CCR1=TIM_GetCapture1(TIM1);
-	CCR2=TIM_GetCapture2(TIM1);
+	CCR1=TIM_GetCapture1(TIM2);
+	//CCR2=TIM_GetCapture2(TIM2);
+	//LowLevel_Time=LowLevel_Time+(CCR2-CCR1);
+	//TIM_ClearITPendingBit(TIM1,TIM_FLAG_Update);
+	//TIM_ClearFlag(TIM2,TIM_FLAG_Update);
+	}
+}
+
+void TIM4_IRQHandler(void){
+TIM_ClearITPendingBit(TIM4 , TIM_IT_CC3);
+	if(x!=30){
+	CCR2=TIM_GetCapture3(TIM4);
 	LowLevel_Time=LowLevel_Time+(CCR2-CCR1);
+	//CCR2=TIM_GetCapture2(TIM2);
+	//LowLevel_Time=LowLevel_Time+(CCR2-CCR1);
 	//TIM_ClearITPendingBit(TIM1,TIM_FLAG_Update);
 	//TIM_ClearFlag(TIM2,TIM_FLAG_Update);
 	}
