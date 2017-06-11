@@ -45,7 +45,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
-
+int y,z;
 /******************************************************************************/
 /*            Cortex-M4 Processor Exceptions Handlers                         */
 /******************************************************************************/
@@ -147,22 +147,26 @@ void SysTick_Handler(void)
 {
 }
 
+//detect positive edge(PA0)
 void TIM2_IRQHandler(void){
-TIM_ClearITPendingBit(TIM2 , TIM_IT_CC1);
+	y=y+1;
+	TIM_ClearITPendingBit(TIM2 , TIM_IT_CC1);
 	if(x!=30){
-	CCR1=TIM_GetCapture1(TIM2);
-	//CCR2=TIM_GetCapture2(TIM2);
+	t1=TIM_GetCapture1(TIM2);
+	//t2=TIM_GetCapture3(TIM2);
 	//LowLevel_Time=LowLevel_Time+(CCR2-CCR1);
 	//TIM_ClearITPendingBit(TIM1,TIM_FLAG_Update);
 	//TIM_ClearFlag(TIM2,TIM_FLAG_Update);
 	}
 }
 
+//detect negative edge and get short-time low level period(PD12)
 void TIM4_IRQHandler(void){
-TIM_ClearITPendingBit(TIM4 , TIM_IT_CC3);
+	z=z+1;
+	TIM_ClearITPendingBit(TIM4 , TIM_IT_CC1);
 	if(x!=30){
-	CCR2=TIM_GetCapture3(TIM4);
-	LowLevel_Time=LowLevel_Time+(CCR2-CCR1);
+	t2=TIM_GetCapture1(TIM4);
+	LowLevel_Time=LowLevel_Time+(t2-t1);
 	//CCR2=TIM_GetCapture2(TIM2);
 	//LowLevel_Time=LowLevel_Time+(CCR2-CCR1);
 	//TIM_ClearITPendingBit(TIM1,TIM_FLAG_Update);
@@ -170,6 +174,7 @@ TIM_ClearITPendingBit(TIM4 , TIM_IT_CC3);
 	}
 }
 
+//count 30sec and display
 void TIM3_IRQHandler(void){
 	char buffer[10];
 	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);

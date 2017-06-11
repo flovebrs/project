@@ -43,7 +43,7 @@
      
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-extern uint32_t temp,	LowLevel_Time,	CCR1,	CCR2;
+extern uint32_t temp,	LowLevel_Time,	t1,	t2;
 extern int x;
 /* Exported macro ------------------------------------------------------------*/ 
 /* Exported functions ------------------------------------------------------- */
