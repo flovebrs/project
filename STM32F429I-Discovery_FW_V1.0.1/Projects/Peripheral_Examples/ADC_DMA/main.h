@@ -43,11 +43,11 @@
      
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-extern uint32_t temp,	LowLevel_Time,	t1,	t2;
+extern uint32_t temp,LowLevel_Time,	DutyCycle,	t1,	t2;
 extern int x;
 /* Exported macro ------------------------------------------------------------*/ 
 /* Exported functions ------------------------------------------------------- */
-
+void Dealy(int x);
 #endif /* __MAIN_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

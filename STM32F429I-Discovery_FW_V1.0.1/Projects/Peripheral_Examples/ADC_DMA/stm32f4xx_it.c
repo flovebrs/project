@@ -149,28 +149,23 @@ void SysTick_Handler(void)
 
 //detect positive edge(PA0)
 void TIM2_IRQHandler(void){
+	char buffer[10];
 	y=y+1;
+	z=TIM_GetCounter(TIM2);
 	TIM_ClearITPendingBit(TIM2 , TIM_IT_CC1);
-	if(x!=30){
+	TIM_ClearFlag(TIM2,TIM_FLAG_CC1);
 	t1=TIM_GetCapture1(TIM2);
-	//t2=TIM_GetCapture3(TIM2);
-	//LowLevel_Time=LowLevel_Time+(CCR2-CCR1);
-	//TIM_ClearITPendingBit(TIM1,TIM_FLAG_Update);
-	//TIM_ClearFlag(TIM2,TIM_FLAG_Update);
-	}
-}
-
-//detect negative edge and get short-time low level period(PD12)
-void TIM4_IRQHandler(void){
-	z=z+1;
-	TIM_ClearITPendingBit(TIM4 , TIM_IT_CC1);
-	if(x!=30){
-	t2=TIM_GetCapture1(TIM4);
+	//Dealy(10);
+	t2=TIM_GetCapture2(TIM2);
+	if(t2>t1){
 	LowLevel_Time=LowLevel_Time+(t2-t1);
-	//CCR2=TIM_GetCapture2(TIM2);
-	//LowLevel_Time=LowLevel_Time+(CCR2-CCR1);
-	//TIM_ClearITPendingBit(TIM1,TIM_FLAG_Update);
-	//TIM_ClearFlag(TIM2,TIM_FLAG_Update);
+	}
+	
+	if(t2!=0){
+	z=(t1*100)/t2;
+	LCD_ClearLine(LINE(1));	
+	sprintf(buffer,"Duty Cycle?:%d percent",z);
+	LCD_DisplayStringLine(LINE(1), (uint8_t*)buffer);
 	}
 }
 
@@ -180,13 +175,15 @@ void TIM3_IRQHandler(void){
 	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 	TIM_ClearFlag(TIM3, TIM_FLAG_Update);
 	x++;
-    if(x==30){
+    if(x==10){
 			if (IOE_Config() == IOE_OK){
 				LCD_Clear(LCD_COLOR_WHITE);
-				sprintf(buffer,"%d",LowLevel_Time);
+				DutyCycle=LowLevel_Time/(180000000*10);
+				sprintf(buffer,"Duty Cycle:%d percent",DutyCycle);
 				LCD_DisplayStringLine(LINE(5), (uint8_t*)buffer);		
 				x=0;
-			}
+				}
+				LowLevel_Time=0;
 	  }
 }	
 
