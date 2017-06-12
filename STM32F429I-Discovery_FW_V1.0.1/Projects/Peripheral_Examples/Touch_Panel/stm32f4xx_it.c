@@ -149,10 +149,13 @@ void SysTick_Handler(void)
 
 
 	void TIM2_IRQHandler(void){
-GPIO_ToggleBits(GPIOG, GPIO_Pin_13);
-	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-	TIM_ClearFlag(TIM2, TIM_FLAG_Update);
-	i++;
+		i++;
+		//if(i==5000){
+		GPIO_ToggleBits(GPIOG, GPIO_Pin_13);
+		//i=0;
+		//}
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+		TIM_ClearFlag(TIM2, TIM_FLAG_Update);
 }
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */

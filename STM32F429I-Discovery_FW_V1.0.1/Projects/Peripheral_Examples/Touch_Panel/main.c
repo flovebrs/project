@@ -35,8 +35,8 @@ static void CLK_config(void){
 	
 	Tim_Basestructure.TIM_CounterMode= TIM_CounterMode_Up ;
 	Tim_Basestructure.TIM_ClockDivision= TIM_CKD_DIV1;
-	Tim_Basestructure.TIM_Period = 5000-1;
-	Tim_Basestructure.TIM_Prescaler = 14400-1;
+	Tim_Basestructure.TIM_Period = 60000-1;
+	Tim_Basestructure.TIM_Prescaler = 1500-1;
 	Tim_Basestructure.TIM_RepetitionCounter = 0;
 	
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);

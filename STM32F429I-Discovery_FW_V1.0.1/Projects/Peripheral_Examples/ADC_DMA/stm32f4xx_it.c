@@ -147,43 +147,40 @@ void SysTick_Handler(void)
 {
 }
 
-//detect positive edge(PA0)
+//Get short low level time
 void TIM2_IRQHandler(void){
-	char buffer[10];
 	y=y+1;
-	z=TIM_GetCounter(TIM2);
+	//z=TIM_GetCounter(TIM2);
 	TIM_ClearITPendingBit(TIM2 , TIM_IT_CC1);
 	TIM_ClearFlag(TIM2,TIM_FLAG_CC1);
 	t1=TIM_GetCapture1(TIM2);
-	//Dealy(10);
 	t2=TIM_GetCapture2(TIM2);
-	if(t2>t1){
-	LowLevel_Time=LowLevel_Time+(t2-t1);
-	}
-	
-	if(t2!=0){
-	z=(t1*100)/t2;
-	LCD_ClearLine(LINE(1));	
-	sprintf(buffer,"Duty Cycle?:%d percent",z);
-	LCD_DisplayStringLine(LINE(1), (uint8_t*)buffer);
+	if((temp-(t2-t1))!=0){
+		temp=t2-t1;
+		LowLevel_Time=LowLevel_Time+t2;
 	}
 }
 
-//count 30sec and display
+//Count 30sec and display
 void TIM3_IRQHandler(void){
 	char buffer[10];
 	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 	TIM_ClearFlag(TIM3, TIM_FLAG_Update);
 	x++;
-    if(x==10){
+    if(x==30){
 			if (IOE_Config() == IOE_OK){
 				LCD_Clear(LCD_COLOR_WHITE);
-				DutyCycle=LowLevel_Time/(180000000*10);
-				sprintf(buffer,"Duty Cycle:%d percent",DutyCycle);
-				LCD_DisplayStringLine(LINE(5), (uint8_t*)buffer);		
+				DutyCycle=LowLevel_Time/(1000*30);
+				sprintf(buffer,"1.Duty Cycle:%d%%",DutyCycle);
+				LCD_DisplayStringLine(LINE(0), (uint8_t*)"Dust Detection:");
+				LCD_DisplayStringLine(LINE(1), (uint8_t*)buffer);
+				if(DutyCycle<=4)	LCD_DisplayStringLine(LINE(2), (uint8_t*)"2.Class:Well");
+				else if(DutyCycle<=7)	LCD_DisplayStringLine(LINE(2), (uint8_t*)"2.Class:Medium");
+				else if(DutyCycle<=12)	LCD_DisplayStringLine(LINE(2), (uint8_t*)"2.Class:Bad");
+				else LCD_DisplayStringLine(LINE(2), (uint8_t*)"2.\"Out Of Range\"");
 				x=0;
-				}
 				LowLevel_Time=0;
+			}
 	  }
 }	
 
