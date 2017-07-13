@@ -147,15 +147,12 @@ void SysTick_Handler(void)
 {
 }
 
-
-	void TIM2_IRQHandler(void){
-		i++;
-		//if(i==5000){
-		GPIO_ToggleBits(GPIOG, GPIO_Pin_13);
-		//i=0;
-		//}
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-		TIM_ClearFlag(TIM2, TIM_FLAG_Update);
+void USART3_IRQHandler(){
+    if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
+    {
+        USART_SendData(USART3, USART_ReceiveData(USART3));
+        while(USART_GetFlagStatus(USART3, USART_IT_TXE)==RESET);
+    }
 }
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */

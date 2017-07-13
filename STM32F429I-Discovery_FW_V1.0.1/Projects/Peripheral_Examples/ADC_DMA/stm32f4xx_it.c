@@ -30,6 +30,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
 #include "main.h"
+#include <stdio.h>
+#include "string.h"
+#include "stdlib.h"
 
 /** @addtogroup STM32F429I_DISCOVERY_Examples
   * @{
@@ -46,6 +49,7 @@
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 int y,z;
+char  *data;
 /******************************************************************************/
 /*            Cortex-M4 Processor Exceptions Handlers                         */
 /******************************************************************************/
@@ -183,6 +187,14 @@ void TIM3_IRQHandler(void){
 			}
 	  }
 }	
+
+void USART3_IRQHandler(){
+    if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
+    {
+        USART_SendData(USART3, USART_ReceiveData(USART3));
+        while(USART_GetFlagStatus(USART3, USART_IT_TXE)==RESET);
+    }
+}
 
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
