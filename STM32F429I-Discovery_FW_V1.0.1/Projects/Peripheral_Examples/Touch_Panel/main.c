@@ -8,33 +8,41 @@
 #include "string.h"
 #include "stdlib.h"
 #include "misc.h"
-
-
 static void GPIOC_Config(void);
+static void GPIOA_Config(void);
 static void USART3_Config(void);
+void USART3_Send(char* string);
+void Delay(void);
+char buff [] = "";
 
 int main(void){
 	GPIOC_Config();
+	GPIOA_Config();
 	USART3_Config();
 
 	while(1){
+	if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0)==1){
+		//memset(buff, 1, strlen(buff));
+		sprintf(buff,"Hello");
+		Delay();
+		USART3_Send(buff);
+		GPIO_ResetBits(GPIOA, GPIO_Pin_0);	
+		}
+	}
 	
 	}
-		
-}
-/*/Set GPIOA for Alernate Function(AF=>PA0 Timer2_CH1)
-static void GPIOC_Config(void){
+
+//Set GPIOA for user button
+static void GPIOA_Config(void){
 GPIO_InitTypeDef GPIO_Structure;
 RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
 GPIO_Structure.GPIO_Pin=GPIO_Pin_0;
 GPIO_Structure.GPIO_Speed=GPIO_Speed_50MHz;
-GPIO_Structure.GPIO_Mode=GPIO_Mode_AF;
+GPIO_Structure.GPIO_Mode=GPIO_Mode_IN;
 //GPIO_Structure.GPIO_OType=GPIO_OType_PP;
 GPIO_Structure.GPIO_PuPd=GPIO_PuPd_NOPULL;
 GPIO_Init(GPIOA,&GPIO_Structure);
-GPIO_PinAFConfig(GPIOA, GPIO_PinSource0, GPIO_AF_TIM2);
 }
-*/
 
 //Set GPIOC for USART3(PC10->Tx,PC11->Rx)
 static void GPIOC_Config(void){
@@ -73,5 +81,13 @@ static void USART3_Config(){
 	USART_Cmd(USART3,ENABLE);
 }
 
-/***************************/
+void USART3_Send(char* string){
+    while(*string){
+        USART_SendData(USART3, *string++);
+        while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
+    }
+}
 
+void Delay(){
+	for(int i=0;i<10000000;i++);
+}

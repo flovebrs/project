@@ -147,13 +147,16 @@ void SysTick_Handler(void)
 {
 }
 
+//Output receive data
 void USART3_IRQHandler(){
-    if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
-    {
+		/*
+    if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET){
         USART_SendData(USART3, USART_ReceiveData(USART3));
         while(USART_GetFlagStatus(USART3, USART_IT_TXE)==RESET);
     }
+		*/
 }
+
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
