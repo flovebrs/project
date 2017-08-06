@@ -149,12 +149,16 @@ void SysTick_Handler(void)
 
 //Output receive data
 void USART3_IRQHandler(){
+	 if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET){
+        
+        char c = USART_ReceiveData(USART3);
 		/*
     if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET){
         USART_SendData(USART3, USART_ReceiveData(USART3));
         while(USART_GetFlagStatus(USART3, USART_IT_TXE)==RESET);
     }
 		*/
+	 }
 }
 
 /******************************************************************************/
@@ -174,3 +178,4 @@ void USART3_IRQHandler(){
 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

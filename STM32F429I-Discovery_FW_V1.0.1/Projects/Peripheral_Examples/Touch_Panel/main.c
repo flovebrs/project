@@ -12,8 +12,11 @@ static void GPIOC_Config(void);
 static void GPIOA_Config(void);
 static void USART3_Config(void);
 void USART3_Send(char* string);
+//void ConToSe(void);
 void Delay(void);
+void Delay1(void);
 char buff [] = "";
+int end=3338;
 
 int main(void){
 	GPIOC_Config();
@@ -23,9 +26,15 @@ int main(void){
 	while(1){
 	if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0)==1){
 		//memset(buff, 1, strlen(buff));
-		sprintf(buff,"Hello");
+		//USART3_Send("AT\r\n");
+		//Delay();
+		USART3_Send("AT+CIPSTART=\"TCP\",\"192.168.50.237\",8234\r\n");
 		Delay();
-		USART3_Send(buff);
+		//for(int i=0;i<100000;i++);
+		//USART3_Send("\r\n");
+		//sprintf(buff,"Hello");
+		//Delay();
+		//USART3_Send(buff);
 		GPIO_ResetBits(GPIOA, GPIO_Pin_0);	
 		}
 	}
@@ -63,7 +72,7 @@ static void USART3_Config(){
 	USART_InitTypeDef USART3_Structure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3,ENABLE);
-	USART3_Structure.USART_BaudRate=9600;
+	USART3_Structure.USART_BaudRate=115200;
 	USART3_Structure.USART_HardwareFlowControl=USART_HardwareFlowControl_None;
 	USART3_Structure.USART_Mode=USART_Mode_Rx	| USART_Mode_Tx;
 	USART3_Structure.USART_Parity=USART_Parity_No;
@@ -84,10 +93,23 @@ static void USART3_Config(){
 void USART3_Send(char* string){
     while(*string){
         USART_SendData(USART3, *string++);
+				Delay1();
         while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
     }
 }
-
-void Delay(){
-	for(int i=0;i<10000000;i++);
+/*
+void ConToSe(void){
+	USART3_Send("AT\n");
+	Delay();
+	USART3_Send("AT+CIPSTART=""TCP"", ""192.168.50.237"",8234");
+	Delay();
 }
+*/
+void Delay(){
+	for(int i=0;i<100000000;i++);
+}
+
+void Delay1(){
+	for(int i=0;i<10000;i++);
+}
+
