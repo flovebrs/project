@@ -28,7 +28,7 @@ int main(void){
 		//memset(buff, 1, strlen(buff));
 		//USART3_Send("AT\r\n");
 		//Delay();
-		USART3_Send("AT+CIPSTART=\"TCP\",\"192.168.50.237\",8234\r\n");
+		USART3_Send("AT+CIPSTART=\"TCP\",\"192.000.00.000\",8234\r\n");
 		Delay();
 		//for(int i=0;i<100000;i++);
 		//USART3_Send("\r\n");
@@ -97,14 +97,7 @@ void USART3_Send(char* string){
         while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
     }
 }
-/*
-void ConToSe(void){
-	USART3_Send("AT\n");
-	Delay();
-	USART3_Send("AT+CIPSTART=""TCP"", ""192.168.50.237"",8234");
-	Delay();
-}
-*/
+
 void Delay(){
 	for(int i=0;i<100000000;i++);
 }
