@@ -46,3 +46,4 @@
 .\adc_dma\stm32f4xx_it.o: .\..\..\..\..\Utilities\STM32F429I-Discovery\stm32f429i_discovery_ioe.h
 .\adc_dma\stm32f4xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\adc_dma\stm32f4xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\adc_dma\stm32f4xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h

@@ -1,31 +1,3 @@
-/**
-  ******************************************************************************
-  * @file    ADC_DMA/stm32f4xx_it.c 
-  * @author  MCD Application Team
-  * @version V1.0.1
-  * @date    11-November-2013
-  * @brief   Main Interrupt Service Routines.
-  *          This file provides template for all exceptions handler and 
-  *          peripherals interrupt service routine.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
-  *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
-  ******************************************************************************
-  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
@@ -48,7 +20,6 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
-int y,z;
 char  *data;
 /******************************************************************************/
 /*            Cortex-M4 Processor Exceptions Handlers                         */
@@ -151,51 +122,50 @@ void SysTick_Handler(void)
 {
 }
 
-//Get short low level time
+//Get short low level time(>2.5u)
 void TIM2_IRQHandler(void){
 	y=y+1;
-	//z=TIM_GetCounter(TIM2);
-	TIM_ClearITPendingBit(TIM2 , TIM_IT_CC1);
-	TIM_ClearFlag(TIM2,TIM_FLAG_CC1);
-	t1=TIM_GetCapture1(TIM2);
+	TIM_ClearITPendingBit(TIM2 , TIM_IT_CC2);
+	TIM_ClearFlag(TIM2,TIM_FLAG_CC2);
 	t2=TIM_GetCapture2(TIM2);
-	if((temp-(t2-t1))!=0){
-		temp=t2-t1;
-		LowLevel_Time=LowLevel_Time+t2;
-	}
+	LowLevel_Time1=LowLevel_Time1+t2;
+}
+
+//Get short low level time(>1u)
+void TIM4_IRQHandler(void){
+		z=z+1;
+		TIM_ClearITPendingBit(TIM4 , TIM_IT_CC2);
+		TIM_ClearFlag(TIM4,TIM_FLAG_CC2);
+		t4=TIM_GetCapture2(TIM4);
+		temp2=t4;
+		LowLevel_Time2=LowLevel_Time2+t4;
 }
 
 //Count 30sec and display
 void TIM3_IRQHandler(void){
-	char buffer[10];
 	TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 	TIM_ClearFlag(TIM3, TIM_FLAG_Update);
 	x++;
-    if(x==30){
-			if (IOE_Config() == IOE_OK){
-				LCD_Clear(LCD_COLOR_WHITE);
-				DutyCycle=LowLevel_Time/(1000*30);
-				sprintf(buffer,"1.Duty Cycle:%d%%",DutyCycle);
-				LCD_DisplayStringLine(LINE(0), (uint8_t*)"Dust Detection:");
-				LCD_DisplayStringLine(LINE(1), (uint8_t*)buffer);
-				if(DutyCycle<=4)	LCD_DisplayStringLine(LINE(2), (uint8_t*)"2.Class:Well");
-				else if(DutyCycle<=7)	LCD_DisplayStringLine(LINE(2), (uint8_t*)"2.Class:Medium");
-				else if(DutyCycle<=12)	LCD_DisplayStringLine(LINE(2), (uint8_t*)"2.Class:Bad");
-				else LCD_DisplayStringLine(LINE(2), (uint8_t*)"2.\"Out Of Range\"");
-				x=0;
-				LowLevel_Time=0;
-			}
-	  }
+	
+    if(x==30)	Get_PM();		
+	
+		Control_Window();
 }	
 
+//Receive data & User	Control MOTOR
 void USART3_IRQHandler(){
-    if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
-    {
-        USART_SendData(USART3, USART_ReceiveData(USART3));
-        while(USART_GetFlagStatus(USART3, USART_IT_TXE)==RESET);
-    }
+    if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET){
+			char mes = USART_ReceiveData(USART3);
+				if(ready==1 && mes != '\r' && mes != '\n'){
+					sprintf (buff, "%s%c", buff,mes); 
+				}
+				else{
+					memset(buff, 0, strlen(buff));					
+				}
+		}
+		// If program set lock to true user's usart command do not work
+		if(lock!=true)		Control_Motor(buff);
 }
-
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */

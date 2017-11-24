@@ -38,6 +38,7 @@
 #include <stdio.h>
 #include "string.h"
 #include "stdlib.h"
+#include "stdbool.h"
 /* Private define ------------------------------------------------------------*/
 /* used to display the ADC converted value on LCD */
 #define USE_LCD
@@ -46,12 +47,26 @@
      
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-extern uint32_t temp,LowLevel_Time,	DutyCycle,	t1,	t2;
-extern int x;
+extern float temp1, LowLevel_Time1, t1, t2;
+extern float temp2, LowLevel_Time2, t3, t4;
+extern float DutyCycle, LowLevel_Time;
+extern int x,y,z,k,q;
+extern int ready;
+extern bool window_con,lock;
+extern int window_pos;
+extern int window_tar;
+extern char buff[100];
+extern char m[100];
+extern char te[100];
+
 /* Exported macro ------------------------------------------------------------*/ 
 /* Exported functions ------------------------------------------------------- */
-char * Usart3_ReadLine(void);
-void Usart3_Puts(char *string);
+extern void USART3_Send(char* string);
+extern void Get_PM(void);
+extern void SetPWM(int x,FunctionalState STATE);
+extern void	Control_Motor(char* buff);
+void Control_Window(void);
+extern void Delay(void);
 #endif /* __MAIN_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

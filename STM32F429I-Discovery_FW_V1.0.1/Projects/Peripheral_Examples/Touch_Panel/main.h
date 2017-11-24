@@ -39,6 +39,10 @@
 
 extern int i;
 extern char buff[];
+extern char buff2[];
+extern char mes;
+//extern char* Usart3_ReadLine();
+extern void USART3_Send(char* string);
 /* Private define ------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/

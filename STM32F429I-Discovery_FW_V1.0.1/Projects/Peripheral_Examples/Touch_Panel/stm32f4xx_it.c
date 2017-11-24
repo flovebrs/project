@@ -149,16 +149,26 @@ void SysTick_Handler(void)
 
 //Output receive data
 void USART3_IRQHandler(){
-	 if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET){
+	if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET){
         
-        char c = USART_ReceiveData(USART3);
-		/*
-    if (USART_GetITStatus(USART3, USART_IT_RXNE) != RESET){
-        USART_SendData(USART3, USART_ReceiveData(USART3));
-        while(USART_GetFlagStatus(USART3, USART_IT_TXE)==RESET);
+  char mes = USART_ReceiveData(USART3);
+		if(mes != '\r' && mes != '\n'){
+			sprintf (buff, "%s%c", buff,mes); 
     }
-		*/
-	 }
+		else{
+      USART3_Send(buff);
+			memset(buff, 0, strlen(buff));
+		}
+	}
+}
+
+void TIM3_IRQHandler(){
+	 if (TIM_GetITStatus(TIM3, TIM_IT_Update) == SET)
+    { 
+        GPIO_ToggleBits(GPIOG, GPIO_Pin_13);
+        TIM_ClearITPendingBit(TIM3,TIM_FLAG_Update);
+    }
+	
 }
 
 /******************************************************************************/
